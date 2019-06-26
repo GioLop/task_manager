@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block page_content %}
+<div>
+    <form method=POST action="">
+       {{ form.hidden_tag() }}
+        <fieldset>
+            <legend>Join to task manager</legend>
+            <div>
+                {{ form.email.label() }}
+                {% if form.email.errors %}
+                    {{ form.email(class='is-invalid') }}
+                    {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %} 
+                {% else %}
+                    {{ form.email }}
+                {% endif %}
+            </div>
+            <div>
+                {{ form.password.label() }}
+                {% if form.password.errors %}
+                    {{ form.password(class='is-invalid') }}
+                    {% for error in form.password.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %} 
+                {% else %}
+                    {{ form.password }}
+                {% endif %}
+            </div>
+            <div>
+                {{ form.remember() }}
+                {{ form.remember.label() }}
+            </div>
+            <small>
+                <a href="#">Forgot Password?</a>
+            </small>
+        </fieldset>
+        <div>
+            {{ form.submit() }}
+        </div>
+    </form>
+</div>
+<div>
+    <small>
+        Need an account? <a href="{{ url_for('register') }}">Sign Up Now</a>
+    </small>
+</div>
+{% endblock %}
