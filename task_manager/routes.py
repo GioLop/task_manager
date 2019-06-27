@@ -1,5 +1,5 @@
-from flask import render_template, flash, redirect, url_for
-from flask_login  import login_user, current_user, logout_user
+from flask import render_template, flash, redirect, url_for, request
+from flask_login  import login_user, current_user, logout_user, login_required
 from task_manager import app, db, bcrypt
 from task_manager.forms import RegistrationForm, LoginForm
 from task_manager.models import User, Board, List, Task
@@ -58,5 +58,11 @@ def logout():
     return redirect(url_for('home'))
 
 @app.route('/<username>/boards')
+@login_required
 def boards(username):
-    return render_template('boards.html', username=username ) 
+    return render_template('boards.html', username=username)
+
+@app.route('/account')
+@login_required
+def account():
+    return render_template('account.html', username=current_user.username)
