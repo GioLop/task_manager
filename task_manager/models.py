@@ -35,7 +35,7 @@ class List(db.Model):
     tasks = db.relationship('Task', backref='list')
 
     def __repr__(self):
-        return '<List {0}>'.format(self.name)
+        return f"List('{self.name}')"
 
 class Task(db.Model):
     __tablename__ = 'tasks'
@@ -44,4 +44,4 @@ class Task(db.Model):
     list_id = db.Column(db.Integer, db.ForeignKey('lists.id'))
 
     def __repr__(self):
-        return '<Task {0}>'.format(self.name)
+        return f"Task('{self.name}')"
