@@ -5,7 +5,16 @@ from flask_login import UserMixin
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-class User(db.Model, UserMixin):
+class BaseModel(db.Model):
+    def edit(self, new_name):
+        self.name = new_name
+        db.session.commit()
+    
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+class User(BaseModel, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, nullable=False)
@@ -14,64 +23,58 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(120), nullable=False, default='default.jpg')
     boards = db.relationship('Board', backref='user')
 
-    def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
-
     def add_board(self, name):
         new_board = Board(name=name, user_id=self.id)
         db.session.add(new_board)
         db.session.commit()
         return new_board
-    
-    def remove_board(self, name):
-        board = Board.query.filter_by(name=name).first()
-        db.session.delete(board)
-        db.session.commit()
 
-class Board(db.Model):
+    def __repr__(self):
+        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+
+class Board(BaseModel):
     __tablename__ = 'boards'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     lists = db.relationship('List', backref='board')
 
-    def __repr__(self):
-        return f"Board('{self.name}')"
-
     def add_list(self, name):
         new_list = List(name=name, board_id=self.id)
         db.session.add(new_list)
         db.session.commit()
 
-class List(db.Model):
+    def __repr__(self):
+        return f"Board('{self.name}')"
+
+class List(BaseModel):
     __tablename__ = 'lists'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
-    board_id = db.Column(db.Integer, db.ForeignKey('boards.id'))
+    name = db.Column(db.String(64), nullable=False)
+    board_id = db.Column(db.Integer, db.ForeignKey('boards.id'), nullable=False)
     tasks = db.relationship('Task', backref='list')
 
-    def __repr__(self):
-        return f"List('{self.name}')"
-    
     def add_task(self, name):
         new_task = Task(name=name, list_id=self.id)
         db.session.add(new_task)
         db.session.commit()
+    
+    def delete_all_tasks(self):
+        for task in self.tasks:
+            task.delete()
 
-class Task(db.Model):
+    def __repr__(self):
+        return f"List('{self.name}')"
+
+class Task(BaseModel):
     __tablename__ = 'tasks'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
+    name = db.Column(db.String(64), nullable=False)
     list_id = db.Column(db.Integer, db.ForeignKey('lists.id'))
+
+    def change_list_id(self, new_list_id):
+        self.list_id = new_list_id
+        db.session.commit()
 
     def __repr__(self):
         return f"Task('{self.name}')"
-
-    def move_task(self):
-        pass
-    
-    def change_name(self):
-        pass
-    
-    def delete(self):
-        pass
