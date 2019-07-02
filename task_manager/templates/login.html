@@ -1,13 +1,14 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Log n{% endblock %}
 
 {% block page_content %}
-<div>
-    <form method=POST action="">
+<div class="container col-md-4 col-md-offset-4">
+    <form method="POST" action="">
        {{ form.hidden_tag() }}
         <fieldset>
-            <legend>Join to task manager</legend>
-            <div>
+            <h2>Login</h2>
+            <p>Log in to our task manager:</p>
+            <div class="form-group">
                 {{ form.email.label() }}
                 {% if form.email.errors %}
                     {{ form.email(class='is-invalid') }}
@@ -15,10 +16,10 @@
                         <span>{{ error }}</span>
                     {% endfor %} 
                 {% else %}
-                    {{ form.email }}
+                    {{ form.email(class='form-control') }}
                 {% endif %}
             </div>
-            <div>
+            <div class="form-group">
                 {{ form.password.label() }}
                 {% if form.password.errors %}
                     {{ form.password(class='is-invalid') }}
@@ -26,23 +27,25 @@
                         <span>{{ error }}</span>
                     {% endfor %} 
                 {% else %}
-                    {{ form.password }}
+                    {{ form.password(class='form-control') }}
                 {% endif %}
-            </div>
-            <div>
+            </div class="form-group">
+            <div class="form-group">
                 {{ form.remember() }}
                 {{ form.remember.label() }}
             </div>
-            <small>
-                <a href="#">Forgot Password?</a>
-            </small>
+            <div class="form-group">
+                <small>
+                    <a href="#">Forgot Password?</a>
+                </small>
+            </div>
         </fieldset>
-        <div>
-            {{ form.submit() }}
+        <div class="form-group">
+            {{ form.submit(class='btn btn-primary btn-md float-left form-control') }}
         </div>
     </form>
 </div>
-<div>
+<div class="container col-md-4 col-md-offset-4">
     <small>
         Need an account? <a href="{{ url_for('register') }}">Sign Up Now</a>
     </small>

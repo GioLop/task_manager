@@ -31,3 +31,11 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Log In')
+
+class AddBoard(FlaskForm):
+    name = StringField('New board name', validators=[DataRequired()])
+    submit = SubmitField('Create Board')
+
+class AddList(FlaskForm):
+    name = StringField('Create new List', validators=[DataRequired()])
+    submit = SubmitField('Create List')

@@ -1,0 +1,17 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Task Manager{% endblock %}
+
+{% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class='{{ category }}'>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+<div class="container">
+    {% block page_content %}{% endblock %}
+</div>
+{% endblock %}
