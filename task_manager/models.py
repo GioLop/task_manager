@@ -5,16 +5,7 @@ from flask_login import UserMixin
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-class BaseModel(db.Model):
-    def edit(self, new_name):
-        self.name = new_name
-        db.session.commit()
-    
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-
-class User(BaseModel, UserMixin):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, nullable=False)
@@ -32,7 +23,7 @@ class User(BaseModel, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
-class Board(BaseModel):
+class Board(db.Model):
     __tablename__ = 'boards'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
@@ -47,7 +38,7 @@ class Board(BaseModel):
     def __repr__(self):
         return f"Board('{self.name}')"
 
-class List(BaseModel):
+class List(db.Model):
     __tablename__ = 'lists'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
@@ -66,7 +57,7 @@ class List(BaseModel):
     def __repr__(self):
         return f"List('{self.name}')"
 
-class Task(BaseModel):
+class Task(db.Model):
     __tablename__ = 'tasks'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
