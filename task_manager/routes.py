@@ -1,18 +1,20 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonfy
 from flask_login  import login_user, current_user, logout_user, login_required
 from task_manager import app, db, bcrypt
 from task_manager.forms import RegistrationForm, LoginForm
 from task_manager.models import User, Board, List, Task
 
-@app.route('/')
-@app.route('/home')
+API_V1_PATH = '/api/v1.0'
+
+@app.route('/', method=['GET'])
+@app.route('/home', method=['GET'])
 def home():
     if current_user.is_authenticated:
         return redirect(url_for('boards', username=current_user.username))
     else:
         return render_template('home.html')
 
-@app.route('/register')
+@app.route('/register', method=['GET'])
 def register():
     form = RegistrationForm()
     
@@ -38,7 +40,7 @@ def new_register():
     else:
         return render_template('register.html', title='Register', form=form)  
 
-@app.route('/login')
+@app.route('/login', method=['GET'])
 def login():
     form = LoginForm()
 
@@ -62,12 +64,12 @@ def user_login():
         flash('Please check email and password!', 'danger')
         return render_template('login.html', title='Login', form=form)
 
-@app.route('/logout')
+@app.route('/logout', method=['GET'])
 def logout():
     logout_user()
     return redirect(url_for('home'))
 
-@app.route('/account')
+@app.route('/account', method=['GET'])
 @login_required
 def account():
     return render_template('account.html', current_user=current_user)
@@ -76,3 +78,63 @@ def account():
 @login_required
 def boards(username):
     return render_template('boards.html', current_user=current_user)
+
+@app.route(API_V1_PATH + '/boards')
+@login_required
+def get_boards():
+    pass
+
+@app.route(API_V1_PATH + '/boards', method=['POST'])
+@login_required
+def add_board():
+    pass
+
+@app.route(API_V1_PATH + '/boards', method=['PUT'])
+@login_required
+def update_board():
+    pass
+
+@app.route(API_V1_PATH + '/boards', method=['DELETE'])
+@login_required
+def delete_board():
+    pass
+
+@app.route(API_V1_PATH + '/lists')
+@login_required
+def get_lists():
+    pass
+
+@app.route(API_V1_PATH + '/lists', method=['POST'])
+@login_required
+def add_list():
+    pass
+
+@app.route(API_V1_PATH + '/lists', method=['PUT'])
+@login_required
+def update_list():
+    pass
+
+@app.route(API_V1_PATH + '/lists', method=['DELETE'])
+@login_required
+def delete_list():
+    pass
+
+@app.route(API_V1_PATH + '/tasks')
+@login_required
+def get_tasks():
+    pass
+
+@app.route(API_V1_PATH + '/tasks', method=['POST'])
+@login_required
+def add_tasks():
+    pass
+
+@app.route(API_V1_PATH + '/tasks', method=['PUT'])
+@login_required
+def update_task():
+    pass
+
+@app.route(API_V1_PATH + '/tasks', method=['DELETE'])
+@login_required
+def delete_task():
+    pass
