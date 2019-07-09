@@ -7,11 +7,11 @@
        {{ form.hidden_tag() }}
         <fieldset>
             <h2>Login</h2>
-            <p>Log in to our task manager:</p>
+            <p>Log in our task manager:</p>
             <div class="form-group">
                 {{ form.email.label() }}
                 {% if form.email.errors %}
-                    {{ form.email(class='is-invalid') }}
+                    {{ form.email(class='form-control is-invalid') }}
                     {% for error in form.email.errors %}
                         <span>{{ error }}</span>
                     {% endfor %} 
@@ -22,7 +22,7 @@
             <div class="form-group">
                 {{ form.password.label() }}
                 {% if form.password.errors %}
-                    {{ form.password(class='is-invalid') }}
+                    {{ form.password(class='form-control is-invalid') }}
                     {% for error in form.password.errors %}
                         <span>{{ error }}</span>
                     {% endfor %} 

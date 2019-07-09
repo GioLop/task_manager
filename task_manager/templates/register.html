@@ -11,7 +11,7 @@
             <div class="form-group">
                 {{ form.username.label() }}
                 {% if form.username.errors %}
-                    {{ form.username(class='is-invalid') }}
+                    {{ form.username(class='form-control is-invalid') }}
                     {% for error in form.username.errors %}
                         <span>{{ error }}</span>
                     {% endfor %} 
@@ -22,7 +22,7 @@
             <div class="form-group">
                 {{ form.email.label() }}
                 {% if form.email.errors %}
-                    {{ form.email(class='is-invalid') }}
+                    {{ form.email(class='form-control is-invalid') }}
                     {% for error in form.email.errors %}
                         <span>{{ error }}</span>
                     {% endfor %} 
@@ -33,7 +33,7 @@
             <div class="form-group">
                 {{ form.password.label() }}
                 {% if form.password.errors %}
-                    {{ form.password(class='is-invalid') }}
+                    {{ form.password(class='form-control is-invalid') }}
                     {% for error in form.password.errors %}
                         <span>{{ error }}</span>
                     {% endfor %} 
@@ -44,7 +44,7 @@
             <div class="form-group">
                 {{ form.confirm_password.label() }}
                 {% if form.confirm_password.errors %}
-                    {{ form.confirm_password(class='is-invalid') }}
+                    {{ form.confirm_password(class='iform-control s-invalid') }}
                     {% for error in form.confirm_password.errors %}
                         <span>{{ error }}</span>
                     {% endfor %} 
@@ -60,7 +60,7 @@
 </div>
 <div class="container col-md-4 col-md-offset-4">
     <small>
-        Already have an account? <a href="{{ url_for('login') }}">Sign In</a>
+        Already have an account? <a href="{{ url_for('login') }}">Log In</a>
     </small>
 </div>
 {% endblock %}

@@ -7,29 +7,4 @@
         <span class="glyphicon glyphicon-user"></span>
         PersonalBoards
     </h4>
-    <div>
-        {% for board in current_user.boards%}
-        <div class="well">
-            <a href="{{ url_for('board', board_id=board.id) }}">
-                {{ board.name }}
-            </a>
-        </div>
-        {% endfor %}
-    </div>
-    <div>
-        <form method="POST" action="">
-            {{ form.hidden_tag() }}
-            <fieldset>
-                <h4>
-                    <span class="glyphicon glyphicon-plus"></span>
-                    Add a new board
-                </h4>
-                <div class="form-group">
-                    {{ form.name.label() }}
-                    {{ form.name }}
-                    {{ form.submit() }}
-                </div>
-            </fieldset>
-        </form>
-    </div>
 {% endblock %}
